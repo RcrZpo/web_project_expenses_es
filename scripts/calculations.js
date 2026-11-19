@@ -1,4 +1,4 @@
-let budgetValue;
+let budgetValue = 0;
 let totalExpensesValue = 0;
 let expenseEntries = [
   ["groceries", 33],
@@ -17,6 +17,7 @@ function calculateAverageExpense() {
   if (expenseEntries.length === 0) {
     return 0;
   }
+
   return totalExpensesValue / expenseEntries.length;
 }
 
@@ -43,21 +44,27 @@ function calculateCategoryExpenses(category) {
   }
   return total;
 }
-let categoriesData = [];
-let highestCategory = ["", 0];
+
 function calculateLargestCategory() {
-  for (let i = 0; i < categoryNames.length; i++) {
-    let category = categoryNames[i];
-    let categoryTotal = calculateCategoryExpenses(category);
-    categoriesData.push([category, categoryTotal]);
-  }
-  for (let i = 0; i < categoriesData.length; i++) {
-    if (categoriesData[i][1] > highestCategory[1]) {
-      highestCategory = categoriesData[i];
-      console.log("Highest category:", highestCategory);
+  const categories = [
+    "groceries",
+    "restaurants",
+    "transport",
+    "home",
+    "subscriptions",
+  ];
+
+  let largestCategory = categories[0];
+  let largestTotal = calculateCategoryExpenses(largestCategory);
+
+  for (const category of categories) {
+    const categoryTotal = calculateCategoryExpenses(category);
+    if (categoryTotal > largestTotal) {
+      largestTotal = categoryTotal;
+      largestCategory = category;
     }
   }
-  return highestCategory[0];
+  return largestCategory;
 }
 function addExpenseEntry(entry) {
   expenseEntries.push(entry);
